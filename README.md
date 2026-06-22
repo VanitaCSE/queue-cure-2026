@@ -13,10 +13,23 @@
 
 Queue Cure 2026 is a full-stack clinic queue management application designed for hackathon and production deployment. Receptionists manage the patient queue from a dashboard while patients view live status on a waiting room display — all synchronized instantly via Flask-SocketIO WebSockets with **zero page refreshes** and **no polling**.
 
+## Why Queue Cure 2026?
+
+According to the hackathon problem statement, many clinics still rely on paper-token systems, manual announcements, and disconnected communication between receptionists and patients.
+
+Queue Cure 2026 solves this problem through real-time queue visibility powered by WebSockets.
+
+Benefits:
+- Eliminates manual queue announcements
+- Reduces patient uncertainty and frustration
+- Provides transparent wait-time estimation
+- Synchronizes all screens instantly
+- Improves clinic operational efficiency
+- Creates a modern patient experience
+
 ## Problem Statement
 
 Traditional clinic queues rely on paper tokens and manual announcements, leading to:
-
 - Patients unsure of their position or wait time
 - Receptionists repeating status updates verbally
 - No visibility into daily throughput or analytics
@@ -36,25 +49,47 @@ Traditional clinic queues rely on paper tokens and manual announcements, leading
 | **CSV Export** | Download full patient queue history |
 | **Edge Case Handling** | Empty queue, duplicates, reconnect, validation |
 
+## Hackathon Evaluation Mapping
+
+| Evaluation Criteria | How Queue Cure Solves It |
+|---------------------|--------------------------|
+| Live Queue Updates (40%) | Flask-SocketIO broadcasts updates instantly across all connected screens |
+| Real Wait-Time Calculation (25%) | Wait time = Patients Ahead × Average Consultation Time |
+| Receptionist Usability (20%) | One-click patient management, validation, search, confirmations, activity logs |
+| Edge Cases & Concurrency (15%) | Reconnect handling, queue reset confirmation, duplicate prevention, multi-tab synchronization |
+
 ## Architecture
 
-```
-┌─────────────────┐     WebSocket      ┌──────────────────┐
-│  Receptionist   │◄──────────────────►│                  │
-│   Dashboard     │                    │   Flask Server   │
-└─────────────────┘                    │   + SocketIO     │
-                                       │   + SQLite       │
-┌─────────────────┐     WebSocket      │                  │
-│  Patient Display│◄──────────────────►│                  │
-└─────────────────┘                    └──────────────────┘
-         ▲                                      ▲
-         │                                      │
-┌─────────────────┐     WebSocket              │
-│   Analytics     │◄───────────────────────────┘
-└─────────────────┘
-```
+Receptionist Dashboard
+         │
+         │ Add / Call / Remove Patient
+         ▼
+Flask + Socket.IO Server
+         │
+         ▼
+SQLite Database
+         │
+         ▼
+Broadcast Real-Time Events
+         │
+  ┌──────┴─────────┐
+  ▼                ▼
+Patient Room   Analytics Dashboard
+
+Instant Updates Without Refresh
 
 **Stack:** Python Flask · Flask-SocketIO · SQLite · HTML/CSS/JS · Bootstrap 5 · Socket.IO Client · Gunicorn + Eventlet (Render)
+
+## Real-Time Innovation
+
+Unlike traditional web applications that rely on manual refreshes or polling, Queue Cure 2026 uses WebSocket communication through Flask-SocketIO.
+
+Every queue action instantly propagates to:
+- Receptionist Dashboard
+- Patient Waiting Room
+- Analytics Dashboard
+
+This creates a truly synchronized clinic experience.
 
 ## Screenshots
 
@@ -188,6 +223,18 @@ See [docs/deployment_guide.md](docs/deployment_guide.md) for details.
 - **Multiple tabs** — All tabs receive same WebSocket broadcasts
 - **Simultaneous additions** — SQLite serializes writes; unique token increment
 
+## Project Impact
+
+Queue Cure 2026 transforms traditional paper-token workflows into a modern real-time healthcare management experience.
+
+Expected Outcomes:
+- Faster patient servicing
+- Reduced waiting uncertainty
+- Better receptionist productivity
+- Transparent queue visibility
+- Improved patient satisfaction
+- Real-time operational insights
+
 ## Future Improvements
 
 - Multi-doctor / multi-room support
@@ -198,6 +245,18 @@ See [docs/deployment_guide.md](docs/deployment_guide.md) for details.
 - QR code check-in for patients
 - Historical analytics with date range filters
 - PWA support for mobile receptionist app
+
+## Hackathon Submission Deliverables
+
+✅ Working Prototype
+✅ GitHub Repository
+✅ README Documentation
+✅ Socket Event Diagram
+✅ Thought Process Document
+✅ Analytics Dashboard
+✅ Real-Time WebSocket Synchronization
+✅ Deployment Ready on Render
+✅ Mobile Responsive Design
 
 ## Project Structure
 
