@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Waiting Room — Queue Cure 2026</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body data-page="patient">
+  <div class="d-flex app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <i class="bi bi-heart-pulse-fill"></i>
+        <span id="clinicBrandName">Queue Cure</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/" class="sidebar-link"><i class="bi bi-house"></i> Home</a>
+        <a href="/dashboard" class="sidebar-link"><i class="bi bi-speedometer2"></i> Dashboard</a>
+        <a href="/patient" class="sidebar-link active"><i class="bi bi-display"></i> Waiting Room</a>
+        <a href="/analytics" class="sidebar-link"><i class="bi bi-bar-chart-line"></i> Analytics</a>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="btn btn-sm btn-outline-secondary w-100" id="darkModeToggle">
+          <i class="bi bi-moon-stars"></i> Dark Mode
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content flex-grow-1">
+      <header class="top-bar d-flex flex-wrap justify-content-between align-items-center gap-3">
+        <div>
+          <h1 class="h4 mb-0 fw-bold">Patient Waiting Room</h1>
+          <small class="text-muted" id="currentTimeDisplay">—</small>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+          <span class="connection-badge" id="connectionStatus">
+            <span class="pulse-dot-sm"></span> Connecting...
+          </span>
+          <div class="doctor-status-badge" id="doctorStatusBadge">
+            🟢 Doctor Available
+          </div>
+        </div>
+      </header>
+
+      <div class="content-area">
+        <div class="row g-4 mb-4">
+          <div class="col-lg-7">
+            <div class="now-serving-card text-center">
+              <div class="now-serving-label d-flex align-items-center justify-content-center gap-3 mb-4">
+                <span class="pulse-dot"></span> Now Serving
+              </div>
+              <div class="now-serving-token" id="currentTokenDisplay">—</div>
+              <div class="now-serving-name mt-3" id="currentPatientName">No patient called</div>
+              <div class="doctor-status-pill mt-4" id="doctorStatusPill">
+                🟢 Doctor Available
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="row g-3">
+              <div class="col-12">
+                <div class="stat-card gradient-primary">
+                  <div class="stat-label">Patients Waiting</div>
+                  <div class="stat-value" id="waitingCountDisplay">0</div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="stat-card" style="background: linear-gradient(135deg, #7c3aed, #8b5cf6);">
+                  <div class="stat-label">Your Position</div>
+                  <div class="stat-value" id="yourPositionDisplay">—</div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="stat-card gradient-warning">
+                  <div class="stat-label">Estimated Wait</div>
+                  <div class="stat-value"><span id="estWaitDisplay">0</span> min</div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="stat-card gradient-info">
+                  <div class="stat-label">Last Updated</div>
+                  <div class="stat-value" id="lastUpdatedDisplay">—</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Up Next Section (shown when queue is not empty) -->
+        <div class="upcoming-section mt-4" id="upcomingSection" style="display: none;">
+          <h5 class="mb-3 fw-bold"><i class="bi bi-list-ol me-2"></i>Up Next</h5>
+          <div class="upcoming-grid row g-3" id="upcomingList"></div>
+        </div>
+
+        <!-- Empty State (shown when queue is empty) -->
+        <div class="mt-4" id="emptyStateSection">
+          <div class="panel-card">
+            <div class="panel-body py-5 text-center">
+              <i class="bi bi-inbox text-muted" style="font-size: 4rem;"></i>
+              <h4 class="mt-3 fw-bold text-muted">No Patients Waiting</h4>
+              <p class="text-muted mt-2 mb-0">Receptionist will add patients here.</p>
+            </div>
+          </div>
+        </div>
+
+        <footer class="py-4 border-top text-center text-muted mt-5">
+          <div class="container">
+            <p class="mb-1"><strong>Queue Cure 2026</strong></p>
+            <p class="mb-1">Built with Flask • Socket.IO • SQLite</p>
+            <p class="mb-1">Real-Time Healthcare Queue Management System</p>
+            <p class="mb-0">Version 1.0</p>
+          </div>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/socket.io-client@4.7.5/dist/socket.io.min.js"></script>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
