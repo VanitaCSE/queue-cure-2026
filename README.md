@@ -94,6 +94,12 @@ Instant Updates Without Refresh
 
 ---
 
+## Socket Event Diagram
+Detailed real-time communication flow is available in:
+📄 docs/socket_diagram.md
+
+---
+
 # Real-Time Innovation
 
 Unlike traditional web applications that rely on manual refreshes or polling, Queue Cure 2026 uses **WebSocket communication through Flask-SocketIO**.
